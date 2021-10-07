@@ -27,8 +27,11 @@ mat-card {
   text-align: center;
 }
 
-.forget-password {
-  padding-left: 0px;
+.wrongPassword {
+  text-align: left;
+  color: red;
+  padding-left:30px ;
+  font-weight: 500;  
 }
 
 .emailInput {

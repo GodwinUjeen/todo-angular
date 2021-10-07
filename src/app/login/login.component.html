@@ -19,21 +19,22 @@
                 </span>
                 <mat-form-field class="full-width" appearance="outline">
                     <mat-label>Password</mat-label>
-                    <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
-                    <div mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-                        [attr.aria-pressed]="hide">
+                    <input formControlName="password" matInput [type]=" hidePassword ? 'password' : 'text'" required />
+                    <div mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                        [attr.aria-label]="'Hide Password'" [attr.aria-pressed]="hidePassword">
                         <mat-icon>
-                            {{hide ? 'visibility_off' : 'visibility'}}
+                            {{hidePassword ? 'visibility_off' : 'visibility'}}
                         </mat-icon>
                     </div>
                     <mat-error *ngIf="!loginForm.controls['password'].valid">
                         Enter Password of length greater than 8
                     </mat-error>
+
                 </mat-form-field>
             </div>
+            <div class="wrongPassword" *ngIf="validPassword!=''">{{validPassword}}</div>
             <div style="padding-top: 10px;">
-
-                <button mat-flat-button color="primary" >Login</button>
+                <button mat-flat-button color="primary">Login</button>
             </div>
         </form>
     </mat-card-content>

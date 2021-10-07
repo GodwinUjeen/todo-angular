@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import * as jwt from 'jsonwebtoken';
+import * as CryptoJS from 'crypto-js';
 
 export interface LoginData {
   email: String,
@@ -39,13 +38,14 @@ const users = [
 })
 export class LoginComponent implements OnInit {
 
-  hide: boolean = true;
+  hidePassword: boolean = true;
   newToken = '';
   loginForm!: FormGroup;
-  constructor(private router: Router) {
-  }
+  validPassword = '';
 
-  ngOnInit() {    
+  constructor(private router: Router) { }
+
+  ngOnInit() {
     this.loginForm = new FormGroup(
       {
         email: new FormControl('', [Validators.required, Validators.email]),
@@ -55,17 +55,18 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    if (this.loginForm.valid) {         
+    if (this.loginForm.valid) {
 
       const logged = users.filter(item => item.email === this.loginForm.value.email.toString().trim());
 
       logged[0].password === this.loginForm.value.password
         ?
-        (          
-          localStorage.setItem('token', this.loginForm.value.email),
+        (
+          this.newToken = CryptoJS.AES.encrypt(this.loginForm.value.email.trim(), 's3cR3Tk3y').toString(),
+          localStorage.setItem('token', this.newToken),
           this.router.navigateByUrl('/todo')
         )
-        : ''
+        : (this.validPassword='Wrong Password')
     }
   }
 }

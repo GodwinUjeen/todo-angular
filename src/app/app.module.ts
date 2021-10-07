@@ -17,12 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoComponent } from './todo/todo.component';
 import { AuthGuard } from './auth.guard';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
+import { LoginRouteGuard } from './login-route.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TodoComponent,    
+    TodoComponent,
     DialogComponentComponent
   ],
   imports: [
@@ -38,7 +39,10 @@ import { DialogComponentComponent } from './dialog-component/dialog-component.co
     MatCardModule,
     MatDialogModule,
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    LoginRouteGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

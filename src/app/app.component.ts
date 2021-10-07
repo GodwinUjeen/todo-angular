@@ -8,14 +8,22 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'todo-app';
-  isLoggedIn!: boolean;
 
-  constructor(private router: Router) {
-    this.isLoggedIn = !!localStorage.getItem('token');    
+  constructor(private router: Router) { }
+  onLogin(isLoggedIn: any) {
+    console.log(isLoggedIn.target.value);
+    this.isLoggedIn = isLoggedIn.target.value;
   }
   logout() {
-    this.isLoggedIn=false;
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login')
+  }
+
+  isLoggedIn(): boolean {
+    if (!!localStorage.getItem('token')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

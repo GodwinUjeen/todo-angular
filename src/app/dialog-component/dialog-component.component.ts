@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './dialog-component.component.html',
   styleUrls: ['./dialog-component.component.css']
 })
-export class DialogComponentComponent implements OnInit {
+export class DialogComponentComponent  {
   
   actions = ''
   newDataTitle = ''
@@ -18,9 +18,6 @@ export class DialogComponentComponent implements OnInit {
     this.newDataTitle = data.newDataTitle;
     this.newDataProgress = data.newDataProgress;
     this.actions = data.actions    
-  }
-
-  ngOnInit(): void {
   }
 
 }
