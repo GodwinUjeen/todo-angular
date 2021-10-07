@@ -1,0 +1,30 @@
+<div *ngIf="actions=='edit'">
+    <h2 mat-dialog-title>Edit Todo</h2>
+    <mat-dialog-content>
+
+        <input [(ngModel)]="newDataTitle" matInput placeholder="Title"><br><br>
+        <input [(ngModel)]="newDataProgress" matInput placeholder="Progress">
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button mat-dialog-close
+            [mat-dialog-close]="{title:newDataTitle,progress:newDataProgress}">Save</button>
+
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="actions=='delete'">
+
+    <h2 mat-dialog-title>Delete Todo</h2>
+    <mat-dialog-content>
+        Are you sure! Do you want to delete {{count}} {{count>1?'items':'item'}}?
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close mat-dialog-close=false>Cancel</button>
+        <button mat-button mat-dialog-close mat-dialog-close=true>Delete</button>
+    </mat-dialog-actions>
+</div>
