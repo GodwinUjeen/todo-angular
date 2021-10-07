@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 
 export interface TodoData {

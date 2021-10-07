@@ -16,15 +16,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TodoComponent } from './todo/todo.component';
 import { AuthGuard } from './auth.guard';
-import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TodoComponent,
-    DeleteDialogComponent,
+    TodoComponent,    
     DialogComponentComponent
   ],
   imports: [
