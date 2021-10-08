@@ -18,6 +18,7 @@ import { TodoComponent } from './todo/todo.component';
 import { AuthGuard } from './auth.guard';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { LoginRouteGuard } from './login-route.guard';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LoginRouteGuard } from './login-route.guard';
     MatIconModule,
     MatCardModule,
     MatDialogModule,
+    HttpClientModule
   ],
   providers: [
     AuthGuard,

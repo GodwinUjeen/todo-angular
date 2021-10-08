@@ -29,11 +29,14 @@ export class TodoComponent {
 
   newDataTitle = ''
   newDataStatus = 'Not Done'
+  newDataDescription = ''
 
   addTodo() {
     if (this.newDataTitle !== '') {
+      console.log(this.newDataDescription)
       this.todoData.push({ 'id': this.todoData.length + 2, 'title': this.newDataTitle, 'progress': this.newDataStatus, 'checked': false });
       this.newDataTitle = '';
+      this.newDataDescription = '';
     }
   }
 
@@ -76,7 +79,7 @@ export class TodoComponent {
 
     let dialogRef = this.dialog.open(DialogComponentComponent, {
       data: {
-        actions:'delete',
+        actions: 'delete',
         count: count
       }
     })

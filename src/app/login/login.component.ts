@@ -1,7 +1,17 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { Observable } from 'rxjs';
+import { AuthService, Login } from '../auth.service';
+
+
+export interface User {
+  _id: string,
+  email: string,
+  userId: string
+}
 
 export interface LoginData {
   email: String,
@@ -42,8 +52,13 @@ export class LoginComponent implements OnInit {
   newToken = '';
   loginForm!: FormGroup;
   validPassword = '';
+  private auth: AuthService;
 
-  constructor(private router: Router) { }
+  login$!: any;
+
+  constructor(private router: Router, auth: AuthService) {
+    this.auth = auth;
+  }
 
   ngOnInit() {
     this.loginForm = new FormGroup(
@@ -54,19 +69,17 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  onLogin() {
-    if (this.loginForm.valid) {
+  loginUser() {
+    this.auth.login({ email: this.loginForm.value.email.trim(), password: this.loginForm.value.password.trim() })
+      .subscribe(
+        user => {
+          console.log(user);
+          user._id ? (
+            this.newToken = CryptoJS.AES.encrypt(user._id, 's3cR3Tk3y').toString(),
+            localStorage.setItem('token', this.newToken),
+            this.router.navigateByUrl('/todo')
+          ) : this.router.navigateByUrl('/login')
+        })
 
-      const logged = users.filter(item => item.email === this.loginForm.value.email.toString().trim());
-
-      logged[0].password === this.loginForm.value.password
-        ?
-        (
-          this.newToken = CryptoJS.AES.encrypt(this.loginForm.value.email.trim(), 's3cR3Tk3y').toString(),
-          localStorage.setItem('token', this.newToken),
-          this.router.navigateByUrl('/todo')
-        )
-        : (this.validPassword='Wrong Password')
-    }
   }
 }

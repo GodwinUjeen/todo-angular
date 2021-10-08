@@ -8,58 +8,65 @@
       <input [(ngModel)]="newDataTitle" matInput placeholder="Title">
     </mat-form-field>
     <div>
-      <button (click)="addTodo()" class="btn btn-light text-success">
-        Add Todo
-      </button>
-    </div>
-  </div>
-  <br>
-  <div *ngFor="let todo of todoData; let i=index">
-
-    <table>
-      <tr>
-        <td>
-          <h4></h4>
-        </td>
-        <td>
-          <h4>Title</h4>
-        </td>
-        <td>
-          <h4>Progress</h4>
-        </td>
-        <td>
-          <h4>Actions</h4>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <input type="checkbox" [(ngModel)]="todo.checked">
-        </td>
-        <td>
-          {{todo.title}}
-        </td>
-
-        <td>
-          {{todo.progress}}
-        </td>
-
-        <td>
-          <button class="actionButton" (click)=deleteTodo(i)> <i class="material-icons md-18"
-              style="color: red;">delete</i> </button>
-          <button class="actionButton" (click)=editTodo(i)><i class="material-icons md-18" style="color: blue;">edit</i>
+      <div class="example-form">
+        <!--Add Todo data -->
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input [(ngModel)]="newDataDescription" matInput placeholder="Description">
+        </mat-form-field>
+        <div>
+          <button (click)="addTodo()" class="btn btn-light text-success">
+            Add Todo
           </button>
-        </td>
+        </div>
+      </div>
+      <br>
+      <div *ngFor="let todo of todoData; let i=index">
 
-      </tr>
-    </table>
-  </div>
+        <table>
+          <tr>
+            <td>
+              <h4></h4>
+            </td>
+            <td>
+              <h4>Title</h4>
+            </td>
+            <td>
+              <h4>Progress</h4>
+            </td>
+            <td>
+              <h4>Actions</h4>
+            </td>
+          </tr>
 
-  <div>
-    <button class="actionButton" (click)="deleteMultiple()">
-      <span style="font-size: 18px;"> Delete Tasks</span>
-      <i class="material-icons md-18" style="color: red;font-size: 20px;">delete</i>
-    </button>
-  </div>
+          <tr>
+            <td>
+              <input type="checkbox" [(ngModel)]="todo.checked">
+            </td>
+            <td>
+              {{todo.title}}
+            </td>
 
-  </div>
+            <td>
+              {{todo.progress}}
+            </td>
+
+            <td>
+              <button class="actionButton" (click)=deleteTodo(i)> <i class="material-icons md-18"
+                  style="color: red;">delete</i> </button>
+              <button class="actionButton" (click)=editTodo(i)><i class="material-icons md-18"
+                  style="color: blue;">edit</i>
+              </button>
+            </td>
+
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <button class="actionButton" (click)="deleteMultiple()">
+          <span style="font-size: 18px;"> Delete Tasks</span>
+          <i class="material-icons md-18" style="color: red;font-size: 20px;">delete</i>
+        </button>
+      </div>
+
+    </div>
