@@ -1,0 +1,24 @@
+.actionButton {
+  background-color: white;
+  border: none;
+  size: 10px;
+}
+
+thead {
+  padding-bottom: 50px;
+}
+
+.deleteAll {
+  padding-top: 30px;
+}
+
+i {
+  /* padding: 10px; */
+  font-size: 20px;
+}
+
+th,
+tr,
+td {
+  padding-right: 30px;
+}

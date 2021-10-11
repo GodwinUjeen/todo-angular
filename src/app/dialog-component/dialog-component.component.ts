@@ -10,13 +10,13 @@ export class DialogComponentComponent  {
   
   actions = ''
   newDataTitle = ''
-  newDataProgress = ''
+  newDataDescription = ''
   count = 0
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.count = data.count;
     this.newDataTitle = data.newDataTitle;
-    this.newDataProgress = data.newDataProgress;
+    this.newDataDescription = data.newDataDescription;
     this.actions = data.actions    
   }
 

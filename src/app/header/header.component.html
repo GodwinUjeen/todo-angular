@@ -1,0 +1,36 @@
+<div class="toolbar" role="banner">
+
+    <span style="padding-left:20px;font-size: large;">Welcome <span *ngIf="isLoggedIn()">{{email}}</span></span>
+
+    <div class="spacer"></div>
+
+    <div (isLoggedIn)='onLogin($event)'>
+
+    </div>
+    <div *ngIf="!isLoggedIn()">
+        <ul class="navbar-nav">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active"
+                style="color: white;font-size: large;">Login</a>
+        </ul>
+    </div>
+
+    <div class='logout' *ngIf="isLoggedIn()">
+        <div mat-icon-button (click)="todo()">
+            Todo
+        </div>
+    </div>
+
+    <div class='logout' *ngIf="isLoggedIn()">
+        <div mat-icon-button (click)="settings()">
+            Settings
+        </div>
+    </div>
+
+    <div class='logout' *ngIf="isLoggedIn()">
+        <div mat-icon-button (click)="logout()">
+            Logout
+        </div>
+    </div>
+
+    <div style="padding:20px"></div>
+</div>

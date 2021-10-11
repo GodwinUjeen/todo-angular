@@ -3,7 +3,7 @@
     <mat-dialog-content>
 
         <input [(ngModel)]="newDataTitle" matInput placeholder="Title"><br><br>
-        <input [(ngModel)]="newDataProgress" matInput placeholder="Progress">
+        <input [(ngModel)]="newDataDescription" matInput placeholder="Progress">
 
     </mat-dialog-content>
 
@@ -11,7 +11,7 @@
 
         <button mat-button mat-dialog-close>Cancel</button>
         <button mat-button mat-dialog-close
-            [mat-dialog-close]="{title:newDataTitle,progress:newDataProgress}">Save</button>
+            [mat-dialog-close]="{title:newDataTitle,description:newDataDescription}">Save</button>
 
     </mat-dialog-actions>
 </div>

@@ -1,8 +1,8 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import axios, { AxiosInstance } from 'axios';
-
+import * as CryptoJS from 'crypto-js';
 
 export interface User {
   _id: string,
@@ -11,12 +11,11 @@ export interface User {
 }
 
 export interface Login {
-
   email: string,
   password: string
 }
 
-export interface userDetail{
+export interface userDetail {
   id: string,
   email: string,
   userId: string
@@ -30,7 +29,15 @@ export class AuthService {
   private axiosClient: AxiosInstance;
   private errorHandler: ErrorHandler;
 
+  tokenString: string | any = '';
+  todoToken: string = ''
+
+
   constructor(private user: HttpClient, errorHandler: ErrorHandler) {
+
+    this.tokenString = localStorage.getItem('token');
+    this.todoToken = CryptoJS.AES.decrypt(this.tokenString, 's3cR3Tk3y').toString(CryptoJS.enc.Utf8)
+
     this.errorHandler = errorHandler;
     this.axiosClient = axios.create({
       timeout: 3000,
@@ -40,25 +47,14 @@ export class AuthService {
     });
   }
 
-  // async login(data: Login): Promise<Observable<userDetail>> {
-  //   // try {
-  //     console.log(data);
-  //     let userData = await axios.get(`http://localhost:5000/login?email=${data.email}&password=${data.password}`)
-  //     console.log(userData);
-  //     if (userData.status == 400) {
-  //       return userData.data;
-  //     }
-  //     return userData.data;
-
-  //   // } catch (e) {
-  //   //   console.log(e)
-  //   //   return (this.normalizeError(e));
-  //   // }
-  // }
+  getUserId() {
+    return this.todoToken;
+  }
 
   login(data: Login): Observable<User> {
-    console.log(data)
-    return this.user.get<User>(`http://localhost:5000/login?email=${data.email}&password=${data.password}`);
+    let user = this.user.get<User>(`http://localhost:5000/login?email=${data.email}&password=${data.password}`);
+
+    return user;
   }
 
   async signUp() {
@@ -66,7 +62,6 @@ export class AuthService {
       let userData = await axios.post('http://localhost:5000/signup?email=ajith@gmail.com&password=test1234')
       return userData.data;
     } catch (error) {
-      console.log(error);
       return (this.normalizeError(error));
     }
   }

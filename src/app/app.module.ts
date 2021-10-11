@@ -19,13 +19,19 @@ import { AuthGuard } from './auth.guard';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { LoginRouteGuard } from './login-route.guard';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { AuthService } from './auth.service';
+import { SettingsComponent } from './settings/settings.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     TodoComponent,
-    DialogComponentComponent
+    DialogComponentComponent,
+    SettingsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +45,13 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     MatCardModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [
     AuthGuard,
-    LoginRouteGuard
+    LoginRouteGuard,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

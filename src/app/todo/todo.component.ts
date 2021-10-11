@@ -1,11 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
+import { AuthService } from '../auth.service';
+import { TodoService } from '../todo.service';
+import { SettingsService } from '../settings.service';
 
 export interface TodoData {
   title: string;
-  progress: string;
+  description: string;
+  todoId: number,
   checked: boolean;
+}
+
+export interface Todo {
+  userId: string,
+  todoData: Array<TodoData>
 }
 
 @Component({
@@ -13,46 +22,75 @@ export interface TodoData {
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css']
 })
-export class TodoComponent {
-
-  constructor(public dialog: MatDialog) { }
+export class TodoComponent implements OnInit {
 
   title = 'todo-app';
 
-  public todoData = [
-    { 'id': 1, 'title': 'Homework', 'progress': 'Done', 'checked': false },
-    { 'id': 2, 'title': 'Task', 'progress': 'Inprogress', 'checked': false },
-    { 'id': 3, 'title': 'Cooking', 'progress': 'Inprogress', 'checked': false },
-    { 'id': 4, 'title': 'Washing', 'progress': 'Not Done', 'checked': false },
-    { 'id': 5, 'title': 'Cleaning', 'progress': 'Not Done', 'checked': false }
-  ];
-
+  public todoData: TodoData[] = [];
   newDataTitle = ''
   newDataStatus = 'Not Done'
   newDataDescription = ''
+  loader = true;
+  totalCount = 5;
+  userId = '';
 
-  addTodo() {
+
+  constructor(public dialog: MatDialog,
+    private authService: AuthService,
+    private todoService: TodoService,
+    private settingsService: SettingsService) {
+
+    this.userId = authService.getUserId();
+
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.todoService.getTodo({ userId: this.userId }).subscribe((res) => {
+        this.todoData = res.todoData
+      });
+      this.loader = false;
+    }, 1000)
+  }
+
+  async addTodo() {
     if (this.newDataTitle !== '') {
-      console.log(this.newDataDescription)
-      this.todoData.push({ 'id': this.todoData.length + 2, 'title': this.newDataTitle, 'progress': this.newDataStatus, 'checked': false });
-      this.newDataTitle = '';
-      this.newDataDescription = '';
+      this.loader = true;
+      this.todoService.addTodo(
+        {
+          title: this.newDataTitle,
+          description: this.newDataDescription,
+          userId: this.userId
+        }).subscribe((res) => {
+          this.loader = false;
+          this.todoData = res.todoData;
+          this.newDataDescription = ''
+          this.newDataTitle = ''
+        });
     }
   }
 
-  editTodo(index: number) {
+  editTodo(index: number, id: number) {
     const dialogRef = this.dialog.open(DialogComponentComponent,
       {
         data: {
           actions: 'edit',
           newDataTitle: this.todoData[index].title,
-          newDataProgress: this.todoData[index].progress
+          newDataDescription: this.todoData[index].description
         }
       });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result !== null && result !== "") {
-        this.todoData[index].title = result.title;
-        this.todoData[index].progress = result.progress;
+        this.loader = true;
+        this.todoService.updateTodo({
+          title: result.title,
+          description: result.description,
+          userId: this.userId,
+          todoId: id
+        }).subscribe(res => {
+          this.loader = false;
+          this.todoData = res.todoData;
+        });
       }
     });
   }
@@ -65,8 +103,17 @@ export class TodoComponent {
           count: 1
         }
       })
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 'true') this.todoData.splice(index, 1);
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result == 'true') {
+        this.loader = true;
+        this.todoService.deleteTodo({
+          todoId: index,
+          userId: this.userId
+        }).subscribe(res => {
+          this.loader = false;
+          this.todoData = res.todoData;
+        })
+      };
     });
   }
 
