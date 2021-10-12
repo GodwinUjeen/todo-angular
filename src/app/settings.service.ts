@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import axios from 'axios';
+import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 
 export interface UpdateMailId {
@@ -15,18 +14,21 @@ export interface UpdateData {
 @Injectable({
   providedIn: 'root'
 })
+
 export class SettingsService {
+
+  private subject = new Subject<UpdateMailId>()
 
   constructor(private settings: HttpClient) { }
 
-  updateMailId(data: UpdateData): Observable<UpdateMailId> {    
-    return (data.email == null || data.email == undefined) ?
-      this.settings.get<UpdateMailId>(`http://localhost:5000/getMailId?userId=${data.userId}`)
-      : this.settings.put<UpdateMailId>(`http://localhost:5000/updateMailId?email=${data.email}&userId=${data.userId}`, '')    
+  updateSettings(data: UpdateData) {
+    this.settings.put<UpdateMailId>(`http://localhost:5000/updateMailId?email=${data.email}&userId=${data.userId}`, '')
+      .subscribe(res => {
+        this.subject.next({ email: res.email });
+      })
   }
 
-  sendSettings() {
-
+  getSettings() {
+    return this.subject.asObservable();
   }
 }
-// http://localhost:5000/updateMailId?email=god@gmail.com&userId=USR2021108111356KkDFI

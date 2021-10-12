@@ -26,19 +26,12 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSettings() {
-    // USR2021108111356KkDFI
-    this.settingsService.updateMailId(
-      {
-        email: this.settingsForm.value.email.trim(),
-        userId: this.userId
-      }).subscribe((res) => {
-        // console.log(res);
-      });
+    this.settingsService.updateSettings({
+      email: this.settingsForm.value.email.trim(),
+      userId: this.userId
+    });
   }
 
-
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

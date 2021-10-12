@@ -33,7 +33,7 @@ export class TodoComponent implements OnInit {
   loader = true;
   totalCount = 5;
   userId = '';
-
+  email = ''
 
   constructor(public dialog: MatDialog,
     private authService: AuthService,
@@ -41,7 +41,7 @@ export class TodoComponent implements OnInit {
     private settingsService: SettingsService) {
 
     this.userId = authService.getUserId();
-
+    
   }
 
   ngOnInit(): void {
@@ -64,9 +64,10 @@ export class TodoComponent implements OnInit {
         }).subscribe((res) => {
           this.loader = false;
           this.todoData = res.todoData;
-          this.newDataDescription = ''
-          this.newDataTitle = ''
+
         });
+      this.newDataDescription = ''
+      this.newDataTitle = ''
     }
   }
 

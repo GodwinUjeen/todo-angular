@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
   newToken = '';
   loginForm!: FormGroup;
   validPassword = '';
-  private auth: AuthService;  
+  // private auth: AuthService;  
 
-  constructor(private router: Router, auth: AuthService) {
-    this.auth = auth;    
+  constructor(private router: Router,private auth: AuthService) {
+    // this.auth = auth;    
   }
 
   ngOnInit() {

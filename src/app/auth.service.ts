@@ -21,6 +21,11 @@ export interface userDetail {
   userId: string
 }
 
+export interface TodoToken {
+  email: string,
+  userId: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,11 +37,10 @@ export class AuthService {
   tokenString: string | any = '';
   todoToken: string = ''
 
-
   constructor(private user: HttpClient, errorHandler: ErrorHandler) {
 
     this.tokenString = localStorage.getItem('token');
-    this.todoToken = CryptoJS.AES.decrypt(this.tokenString, 's3cR3Tk3y').toString(CryptoJS.enc.Utf8)
+    if (this.tokenString != null) this.todoToken = CryptoJS.AES.decrypt(this.tokenString, 's3cR3Tk3y').toString(CryptoJS.enc.Utf8)
 
     this.errorHandler = errorHandler;
     this.axiosClient = axios.create({
@@ -48,12 +52,14 @@ export class AuthService {
   }
 
   getUserId() {
+    this.tokenString = localStorage.getItem('token');
+    if (this.tokenString != null) this.todoToken = CryptoJS.AES.decrypt(this.tokenString, 's3cR3Tk3y').toString(CryptoJS.enc.Utf8)
+    console.log(this.todoToken);
     return this.todoToken;
   }
 
   login(data: Login): Observable<User> {
     let user = this.user.get<User>(`http://localhost:5000/login?email=${data.email}&password=${data.password}`);
-
     return user;
   }
 
