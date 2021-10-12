@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import axios, { AxiosInstance } from 'axios';
 import * as CryptoJS from 'crypto-js';
+import { createAction, props } from '@ngrx/store';
 
 export interface User {
   _id: string,
@@ -26,9 +27,16 @@ export interface TodoToken {
   userId: string
 }
 
+// export const login = createAction(
+//   '[Login Page] Login',
+//   props<{ email: string}>()
+// );
+
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   private axiosClient: AxiosInstance;
@@ -51,10 +59,11 @@ export class AuthService {
     });
   }
 
+
+
   getUserId() {
     this.tokenString = localStorage.getItem('token');
-    if (this.tokenString != null) this.todoToken = CryptoJS.AES.decrypt(this.tokenString, 's3cR3Tk3y').toString(CryptoJS.enc.Utf8)
-    console.log(this.todoToken);
+    if (this.tokenString != null) this.todoToken = CryptoJS.AES.decrypt(this.tokenString, 's3cR3Tk3y').toString(CryptoJS.enc.Utf8)    
     return this.todoToken;
   }
 

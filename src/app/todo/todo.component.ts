@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { TodoService } from '../todo.service';
 import { SettingsService } from '../settings.service';
 
+
 export interface TodoData {
   title: string;
   description: string;
@@ -38,9 +39,10 @@ export class TodoComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private authService: AuthService,
     private todoService: TodoService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService    ) {
 
     this.userId = authService.getUserId();
+    
     
   }
 

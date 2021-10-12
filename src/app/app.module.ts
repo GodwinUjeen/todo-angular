@@ -23,6 +23,9 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AuthService } from './auth.service';
 import { SettingsComponent } from './settings/settings.component';
 import { HeaderComponent } from './header/header.component';
+import { StoreModule } from '@ngrx/store';
+
+import * as settingsReducer from './store/settings.reducers'
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import { HeaderComponent } from './header/header.component';
     MatCardModule,
     MatDialogModule,
     HttpClientModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    StoreModule.forRoot({ email: settingsReducer.reducer })
   ],
   providers: [
     AuthGuard,
